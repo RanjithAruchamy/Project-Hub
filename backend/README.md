@@ -1,5 +1,5 @@
 # project-management-dashboard 🔥 
-[👋 Backend Repo](https://github.com/MomenSherif/project-management-dashboard-nodejs)
+[👋 Frontend Repo](https://github.com/MomenSherif/project-management-dashboard)
 [👋 Give a try](https://project-management-dashboard.herokuapp.com/dashboard)
 
 ## Authors
