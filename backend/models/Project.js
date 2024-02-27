@@ -40,6 +40,19 @@ const projectSchema = new mongoose.Schema(
         ref: 'Team',
       },
     ],
+    teamMembers: [
+      {
+        employeeId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Employee',
+        },
+        status: {
+          type: String,
+          enum: ['approved', 'applied', 'declined'],
+          default: 'applied',
+        },
+      },
+    ]
   },
   { timestamps: { createdAt: 'startDate' } }
 );

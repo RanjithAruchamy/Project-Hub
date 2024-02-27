@@ -10,6 +10,6 @@ if (missingEnvVariables.length) {
 
 module.exports = {
   jwtSecretKey: process.env.JWT_SECRET_KEY,
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 8000,
   mongoDBUrl: process.env.MONGODB_URL,
 };

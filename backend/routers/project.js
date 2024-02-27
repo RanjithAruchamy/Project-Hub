@@ -6,6 +6,9 @@ const {
   getProject,
   getProjects,
   assignTeam,
+  applyProject,
+  approveProject,
+  declineProject
 } = require('../controllers/project');
 const { authenticate, isBusinessOwner } = require('../middlewares/auth');
 const { validateProjectOwner } = require('../middlewares/project');
@@ -31,6 +34,31 @@ router.patch(
   validateProjectOwner,
   isBusinessOwner,
   updateProject
+);
+
+// Apply for the project
+router.patch(
+  '/:id/apply',
+  authenticate,
+  applyProject
+);
+
+// Approve the project
+router.patch(
+  '/:id/approve',
+  authenticate,
+  validateProjectOwner,
+  isBusinessOwner,
+  approveProject
+);
+
+// Decline the project
+router.patch(
+  '/:id/decline',
+  authenticate,
+  validateProjectOwner,
+  isBusinessOwner,
+  declineProject
 );
 
 // Get Project
