@@ -47,15 +47,15 @@ const ProjectsOverview = ({ projects }) => {
     <Fragment>
       <Paper className={classes.paper}>
         <Typography variant='subtitle2' color='textSecondary'>
-          Recent Projects
+          Projects
         </Typography>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Project</TableCell>
-              <TableCell>Deadline | End date</TableCell>
+              {/* <TableCell>Deadline | End date</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Budget</TableCell>
+              <TableCell>Budget</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>{projectList}</TableBody>

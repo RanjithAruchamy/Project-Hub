@@ -61,21 +61,21 @@ const Homepage = ({ projects, teams, auth, getProjects, fetchTeams }) => {
           <ProjectCount count={filteredProjects.length}></ProjectCount>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <RevenueMonth projects={projects}></RevenueMonth>
+          {/* <RevenueMonth projects={projects}></RevenueMonth> */}
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <TeamCount count={teams.length}></TeamCount>
+          {/* <TeamCount count={teams.length}></TeamCount> */}
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <RevenueYear projects={projects}></RevenueYear>
+          {/* <RevenueYear projects={projects}></RevenueYear> */}
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} className={classes.mb}>
-          <TeamsChart teams={teams}></TeamsChart>
+          {/* <TeamsChart teams={teams}></TeamsChart> */}
         </Grid>
         <Grid item xs={12} md={6} className={classes.mb}>
-          <RevenueYearChart projects={projects}></RevenueYearChart>
+          {/* <RevenueYearChart projects={projects}></RevenueYearChart> */}
         </Grid>
       </Grid>
       <Grid container spacing={3}>

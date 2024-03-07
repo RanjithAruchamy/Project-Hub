@@ -10,11 +10,6 @@ const signIn = async (req, res) => {
 };
 
 const createEmployee = async (req, res) => {
-  const team = await Team.findOne({
-    name: req.body.teamId,
-    organizationId: req.employee.organizationId,
-  });
-  req.body.teamId = team._id;
   req.body.organizationId = req.employee.organizationId;
   const employee = new Employee(req.body);
   await employee.save();
@@ -26,7 +21,7 @@ const getEmployees = async (req, res) => {
     organizationId: req.employee.organizationId,
   })
     .sort({ createdAt: -1 })
-    .populate('teamId');
+    .populate('projectId');
   res.json(employees);
 };
 

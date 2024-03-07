@@ -50,7 +50,7 @@ const NavBar = ({ theme, onThemeToggle, userId, onLogOut }) => {
         <Toolbar>
           <div className={classes.toolBar}>
             <Button component={Link} to="/dashboard" color="inherit">
-              —Board
+              -ProjectHub
             </Button>
           </div>
           <Tooltip title="toggle light/dark theme">
@@ -98,10 +98,10 @@ const NavBar = ({ theme, onThemeToggle, userId, onLogOut }) => {
                 <GitHubIcon color="primary" className={classes.icon} />
                 <Typography> Projects</Typography>
               </MenuItem>
-              <MenuItem component={Link} to="/teams">
+              {/* <MenuItem component={Link} to="/teams">
                 <GroupIcon color="primary" className={classes.icon} />
                 <Typography> Teams</Typography>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem component={Link} to="/" onClick={onLogOut}>
                 <ExitToAppIcon color="primary" className={classes.icon} />
                 <Typography> Logout</Typography>
@@ -130,7 +130,7 @@ const NavBar = ({ theme, onThemeToggle, userId, onLogOut }) => {
                 <GitHubIcon className={classes.icon} />
                 Projects
               </Button>
-              <Button
+              {/* <Button
                 component={Link}
                 to="/teams"
                 color="inherit"
@@ -138,7 +138,7 @@ const NavBar = ({ theme, onThemeToggle, userId, onLogOut }) => {
               >
                 <GroupIcon className={classes.icon} />
                 Teams
-              </Button>
+              </Button> */}
               <Button
                 component={Link}
                 to="/"

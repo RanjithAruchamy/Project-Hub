@@ -7,9 +7,12 @@ const {
   getProjects,
   assignTeam,
   applyProject,
-  approveProject,
-  declineProject
+  fetchEmployees
 } = require('../controllers/project');
+const {
+  createOpening,
+  fetchOpenings
+} = require('../controllers/openings');
 const { authenticate, isBusinessOwner } = require('../middlewares/auth');
 const { validateProjectOwner } = require('../middlewares/project');
 
@@ -38,28 +41,11 @@ router.patch(
 
 // Apply for the project
 router.patch(
-  '/:id/apply',
+  '/:id/openings/:openingId/apply',
   authenticate,
   applyProject
 );
 
-// Approve the project
-router.patch(
-  '/:id/approve',
-  authenticate,
-  validateProjectOwner,
-  isBusinessOwner,
-  approveProject
-);
-
-// Decline the project
-router.patch(
-  '/:id/decline',
-  authenticate,
-  validateProjectOwner,
-  isBusinessOwner,
-  declineProject
-);
 
 // Get Project
 router.get('/:id', authenticate, validateProjectOwner, getProject);
@@ -76,4 +62,11 @@ router.post(
   assignTeam
 );
 
+// Create Openings
+router.post('/:id/openings', authenticate, isBusinessOwner, createOpening);
+
+// Fetch Openings
+router.get('/:id/openings', authenticate, fetchOpenings);
+
+router.get('/:id/employees', authenticate, fetchEmployees)
 module.exports = router;

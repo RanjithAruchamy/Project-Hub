@@ -49,7 +49,7 @@ const TopEmployees = ({ employees, role, handleEmployeeAdded }) => {
     <Fragment>
       <Paper className={classes.paper}>
         <Typography variant='subtitle2' color='textSecondary'>
-          Recent Employees
+          My Colleagues
         </Typography>
         <Table>
           <TableHead>

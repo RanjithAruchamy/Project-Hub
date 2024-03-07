@@ -137,9 +137,9 @@ const Project = ({ projects, pages, pageSize, getProjects, role }) => {
           aria-label='icon label tabs example'
         >
           <Tab icon={<GitHubIcon />} label='ALL' />
-          <Tab icon={<AutoRenewIcon />} label='IN PROGRESS' />
+          {/* <Tab icon={<AutoRenewIcon />} label='IN PROGRESS' />
           <Tab icon={<RateReviewIcon />} label='IN REVIEW' />
-          <Tab icon={<DoneIcon />} label='DONE' />
+          <Tab icon={<DoneIcon />} label='DONE' /> */}
         </Tabs>
       </Paper>
       {pageLoading}

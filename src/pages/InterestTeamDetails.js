@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TeamDetails = ({ match, role, history , projectId}) => {
+const InterestTeamDetails = ({ match, role, history , projectId}) => {
   const classes = useStyles();
   const [team, setTeam] = useState();
   const [teamMembers, setTeamMembers] = useState();
@@ -53,6 +53,7 @@ const TeamDetails = ({ match, role, history , projectId}) => {
   const [loading, setLoading] = useState(true);
 
   const getTeam = async () => {
+    console.log("get team")
     const { data } = await axios.get(
       `${process.env.REACT_APP_BACKEND_BASE_URL}/projects/${projectId}/employees`
     );
@@ -60,7 +61,6 @@ const TeamDetails = ({ match, role, history , projectId}) => {
       console.log("team data", data)
       setTeam(data);
       setTeamMembers(getTeamMembers(data))
-
       setLoading(false);
     }
   };
@@ -98,7 +98,7 @@ const TeamDetails = ({ match, role, history , projectId}) => {
                   teamId={team.id}
                   team={team}
                   Members={teamMembers}
-                  title="Team Members"
+                  title = "Applied Team Members"
                   getTeam = {getTeam}
                   projectId = {projectId}
                 ></MembersPanel>
@@ -111,9 +111,8 @@ const TeamDetails = ({ match, role, history , projectId}) => {
 
 const getTeamMembers = (team) => {
   console.log("filter team ",team)
-  return team.filter((member) => member.status === 'approved');
+  return team.filter((member) => member.status === 'applied');
 }
-
 const mapStateToProps = (state) => ({
   role: state.auth.role,
 });
@@ -121,4 +120,4 @@ const mapDispatchToProps = (dispatch) => ({
   deleteTeam: (teamId) => dispatch(deleteTeam(teamId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TeamDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(InterestTeamDetails);

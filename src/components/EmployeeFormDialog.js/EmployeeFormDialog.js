@@ -32,7 +32,7 @@ const schema = object().shape({
     .required('Employee password is required!')
     .min(6, 'Password needs to be at least 6 characters!'),
   phoneNumber: string().matches(
-    /^(01)(0|2|1|5)[0-9]{8}$/,
+    /^(\+\d{1,3}[- ]?)?\d{10}$/,
     'Inavalid phone number!'
   ),
   dateOfBirth: date()
@@ -44,7 +44,6 @@ const schema = object().shape({
     .email('Invalid email address!')
     .required('Email is required!'),
   salary: number().moreThan(2000, 'Minimum salary is 2000'),
-  team: string().required('Team is required!'),
 });
 
 function sleep(delay = 0) {
@@ -229,7 +228,7 @@ const EmployeeFormDialog = ({
                   inputRef={register}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* { <Grid item xs={12}>
                 <Autocomplete
                   className={classes.autocomplete}
                   open={dropdownOpen}
@@ -268,6 +267,17 @@ const EmployeeFormDialog = ({
                       }}
                     />
                   )}
+                />
+              </Grid> } */}
+                            <Grid item xs={12} sm={6}>
+                <TextField
+                  id='skill'
+                  name='skill'
+                  label='Skill'
+                  type='text'
+                  fullWidth
+                  margin='normal'
+                  inputRef={register}
                 />
               </Grid>
             </Grid>

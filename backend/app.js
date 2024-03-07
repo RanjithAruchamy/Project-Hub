@@ -9,6 +9,7 @@ const employeeRouter = require('./routers/employee');
 const projectRouter = require('./routers/project');
 const teamRouter = require('./routers/team');
 const taskRouter = require('./routers/task');
+const openingRouter = require('./routers/openings');
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use('/employees', employeeRouter);
 app.use('/projects', projectRouter);
 app.use('/teams', teamRouter);
 app.use('/tasks', taskRouter);
+app.use('/openings', openingRouter);
+
 
 app.use(validationErrorHandler);
 app.use(errorHandler);

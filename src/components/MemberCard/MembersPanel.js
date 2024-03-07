@@ -22,6 +22,9 @@ const MembersPanel = ({
   Members,
   pageSize,
   auth,
+  title,
+  getTeam,
+  projectId
 }) => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
@@ -49,8 +52,8 @@ const MembersPanel = ({
   };
 
   useEffect(() => {
-    setPage(1);
-  }, []);
+    setMembers(team);
+  }, [team]);
 
   useEffect(() => {
     setMembers(
@@ -58,15 +61,21 @@ const MembersPanel = ({
     );
   }, [page]);
 
+  useEffect(() => {
+    if (team) {
+      console.log("Team updated, rendering latest information", team);
+    }
+  }, [team]);
+
   return (
     <Paper elevation={2} className={classes.root}>
       <Typography variant='h4' className={classes.mb} align='center'>
-        Team's Members
+        {title}
       </Typography>
       <Grid container className={classes.flex}>
         {members?.length ? (
           members.map((member) => (
-            <MemberCard key={member._id} member={member} />
+            <MemberCard key={member._id} member={member} auth={auth} getTeam={getTeam} projectId={projectId}/>
           ))
         ) : (
           <Typography>No members yet!</Typography>

@@ -40,22 +40,21 @@ const projectSchema = new mongoose.Schema(
         ref: 'Team',
       },
     ],
-    teamMembers: [
+    openings: [
       {
-        employeeId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Employee',
-        },
-        status: {
-          type: String,
-          enum: ['approved', 'applied', 'declined'],
-          default: 'applied',
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Openings'
       },
-    ]
+    ],
   },
   { timestamps: { createdAt: 'startDate' } }
 );
+
+projectSchema.virtual('employees', {
+  ref: 'Employee',
+  localField: '_id',
+  foreignField: 'projectId'
+});
 
 projectSchema.virtual('tasks', {
   ref: 'Task',

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import Avatar from '@material-ui/core/Avatar';
@@ -12,6 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+
 
 import CreateIcon from '@material-ui/icons/Create';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -37,8 +39,14 @@ import { assignTeamToProject } from '../api/projectHelpers';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import formatter from '../helper/currencyFormater';
+import TeamDetails from './TeamDetails';
+import InterestTeamDetails from './InterestTeamDetails';
+import JobOpeningsTable from './OpeningsAdminOrUser/Openings';
 
 const useStyles = makeStyles((theme) => ({
+  gridContainer: {
+    justifyContent: 'space-evenly',
+  },
   avatar: {
     backgroundColor: theme.palette.primary.main,
   },
@@ -73,10 +81,13 @@ const ProjectDetails = ({
   getProjectById,
   fetchTeams,
   role,
+  propAssignedProjectId
 }) => {
   const [switchState, setSwitchState] = useState({});
   const [project, setProject] = useState(null);
   const [load, setLoad] = useState(true);
+
+  const { id: projectId } = match.params;
 
   const classes = useStyles();
   useEffect(() => {
@@ -94,7 +105,7 @@ const ProjectDetails = ({
         setLoad(false);
       });
     })();
-  }, []);
+  }, [propAssignedProjectId]);
 
   const handleProjectUpdate = (project) => {
     setProject(project);
@@ -134,7 +145,7 @@ const ProjectDetails = ({
         <Typography variant='h2' gutterBottom align='center'>
           Project Overview
         </Typography>
-        <Grid container justify='space-evenly' spacing={6}>
+        <Grid container  className={classes.gridContainer} spacing={6}>
           <Grid item xs={12} md={6}>
             <ProjectDetailsCard
               title='Project Name'
@@ -171,7 +182,7 @@ const ProjectDetails = ({
               />
             </ProjectDetailsCard>
           </Grid>
-          <Grid item xs={12} md={3} sm={6}>
+          {/* <Grid item xs={12} md={3} sm={6}>
             <ProjectDetailsCard
               title='Budget'
               description={formatter.format(project.budget)}
@@ -209,67 +220,19 @@ const ProjectDetails = ({
                 className={classes.icon}
               />
             </ProjectDetailsCard>
-          </Grid>
-          <Grid item xs={12}>
-            <ProjectDetailsCard
-              title='Teams'
-              description={teams.map((team) => (
-                <Grid container alignItems='center' key={team._id} spacing={3}>
-                  <Grid item xs>
-                    <ExpansionPanel className={classes.panel}>
-                      <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls='panel1a-content'
-                        id='panel1a-header'
-                      >
-                        <Grid item className={classes.mr}>
-                          <Avatar
-                            title={team.name}
-                            variant='rounded'
-                            className={classes.avatar}
-                          >
-                            {team.name.charAt(0)}
-                          </Avatar>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant='h5'>{team.name}</Typography>
-                        </Grid>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <Typography variant='body1' gutterBottom>
-                          {team.description}
-                        </Typography>
-                      </ExpansionPanelDetails>
-                      <ExpansionPanelDetails>
-                        <Typography variant='subtitle2' gutterBottom>
-                          Leader:{' '}
-                          {`${team?.leaderId?.firstName} ${team?.leaderId?.lastName}`}
-                        </Typography>
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                  </Grid>
-                  <Grid item>
-                    <Switch
-                      checked={switchState[`teamCheck-${team._id}`]}
-                      onChange={handleChange}
-                      name={`teamCheck-${team._id}`}
-                      value={team.id}
-                      inputProps={{ 'team-id': team._id }}
-                      disabled={role !== 'business-owner'}
-                    />
-                  </Grid>
-                </Grid>
-              ))}
-            >
-              <GroupIcon
-                color='secondary'
-                fontSize='large'
-                className={classes.icon}
-              />
-            </ProjectDetailsCard>
+          </Grid> */}
+          <Grid item xs={12} style={{display: 'flex', justifyContent: 'flex-start'}}>
+           <TeamDetails projectId={projectId}/>
+           {role === 'business-owner' && (
+           <InterestTeamDetails projectId={projectId} />)}
           </Grid>
         </Grid>
-
+        <Grid item xs={12} style={{display: 'flex', justifyContent: 'flex-start'}}>
+        {/* <Card variant="outlined"> */}
+        <JobOpeningsTable projectId={projectId || null} role={role} propAssignedProjectId={propAssignedProjectId}/>       
+         {/* </Card> */}
+        </Grid>
+        
         {role === 'business-owner' && (
           <Fragment>
             <ProjectFormDialog
@@ -298,6 +261,7 @@ const ProjectDetails = ({
 const mapStateToProps = (state, ownProps) => ({
   teams: state.teams,
   role: state.auth.role,
+  propAssignedProjectId: state.auth.projectId,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -36,7 +36,7 @@ const ProjectCard = ({ project }) => {
             </Typography>
           </Grid>
           <Grid item>
-            <ChipProjectStatus statusType={state} />
+            {/* <ChipProjectStatus statusType={state} /> */}
           </Grid>
           <Grid item>
             <Link to={`/project-details/${project._id}`}>

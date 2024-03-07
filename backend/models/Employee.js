@@ -28,7 +28,7 @@ const employeeSchema = new mongoose.Schema(
       type: String,
       validate: {
         validator: function (v) {
-          return /^(01)(0|2|1|5)[0-9]{8}$/.test(v);
+          return /^(\+\d{1,3}[- ]?)?\d{10}$/.test(v);
         },
         message: (props) => `${props.value} is not a valid phone number!`,
       },
@@ -37,9 +37,18 @@ const employeeSchema = new mongoose.Schema(
     salary: {
       type: Number,
     },
-    teamId: {
+    skill: {
+      type: String,
+    },
+    projectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Team',
+      ref: 'Project',
+      required: [false, 'You must supply a project for employee!'],
+    },
+    status: {
+      type: String,
+      enum: ['approved', 'applied', 'not-approved'],
+      default: 'not-approved',
     },
     organizationId: {
       type: mongoose.Schema.Types.ObjectId,

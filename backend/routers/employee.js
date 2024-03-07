@@ -7,8 +7,14 @@ const {
   assignToTeam,
   createEmployee,
 } = require('../controllers/employee');
+const {
+  approveProject,
+  declineProject
+} = require('../controllers/project');
 const { authenticate, isBusinessOwner } = require('../middlewares/auth');
 const { isValidEmailInOrganization } = require('../middlewares/employee');
+const { validateProjectOwner } = require('../middlewares/project');
+
 
 const router = express.Router();
 
@@ -30,6 +36,22 @@ router.post(
   authenticate,
   isValidEmailInOrganization,
   assignToTeam
+);
+
+// Approve the project
+router.patch(
+  '/:id/approve',
+  authenticate,
+  isBusinessOwner,
+  approveProject
+);
+
+// Decline the project
+router.patch(
+  '/:id/decline',
+  authenticate,
+  isBusinessOwner,
+  declineProject
 );
 
 module.exports = router;

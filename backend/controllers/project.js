@@ -1,4 +1,5 @@
 const Project = require('../models/Project');
+const Employee = require('../models/Employee');
 const CustomError = require('../helper/CustomError');
 
 const createProject = async (req, res) => {
@@ -24,61 +25,66 @@ const updateProject = async (req, res) => {
 
 const applyProject = async (req, res) => {
   const project = await Project.findById(req.params.id);
-  var isEmployeeExist = project.teamMembers.filter(tm => {
-    req.employee._id.equals(tm._id);
-  });
-  if (project.teamMembers.length != 0 && isEmployeeExist) {
-    throw new CustomError(400, 'Employee already applied!');
-  }
-  project.teamMembers.push(req.employee);
-  await project.save();
-  res.json(project);
+  // var isEmployeeExist = project.teamMembers.filter(tm => {
+  //   req.employee._id.equals(tm._id);
+  // });
+  // if (project.teamMembers.length != 0 && isEmployeeExist) {
+  //   throw new CustomError(400, 'Employee already applied!');
+  // }
+  req.employee.projectId = project._id;
+  req.employee.status = "applied";
+  await req.employee.save();
+  res.json(req.employee);
 };
 
 const approveProject = async (req, res) => {
-  const project = req.project;
-  var isEmployeeApproved = project.teamMembers.some(tm => {
-    return req.employee._id.equals(tm._id) && tm.status === 'approved';
-  });
-  if (project.teamMembers.length != 0 && isEmployeeApproved == true) {
-    throw new CustomError(400, 'Employee already approved!');
-  }
-  var teamMemberIndex = project.teamMembers.findIndex(tm => tm._id.equals(req.employee._id));
+  const employee = await Employee.findById(req.params.id);
+  employee.status = 'approved';
+  // var isEmployeeApproved = project.teamMembers.some(tm => {
+  //   return req.employee._id.equals(tm._id) && tm.status === 'approved';
+  // });
+  // if (project.teamMembers.length != 0 && isEmployeeApproved == true) {
+  //   throw new CustomError(400, 'Employee already approved!');
+  // }
+  // var teamMemberIndex = project.teamMembers.findIndex(tm => tm._id.equals(req.employee._id));
 
-  if (teamMemberIndex !== -1) {
-    project.teamMembers[teamMemberIndex].status = 'approved';
-    await project.save();
-    console.log('Team member status updated successfully.');
-  }
-  await project.save();
-  res.json(project);
+  // if (teamMemberIndex !== -1) {
+  //   project.teamMembers[teamMemberIndex].status = 'approved';
+  //   await project.save();
+  //   console.log('Team member status updated successfully.');
+  // }
+  await employee.save();
+  res.json(employee);
 };
 
 const declineProject = async (req, res) => {
-  const project = req.project;
-  var isEmployeeDeclined = project.teamMembers.some(tm => {
-    return req.employee._id.equals(tm._id) && tm.status === 'declined';
-  });
-  if (project.teamMembers.length != 0 && isEmployeeDeclined == true) {
-    throw new CustomError(400, 'Employee already declined!');
-  }
-  var teamMemberIndex = project.teamMembers.findIndex(tm => tm._id.equals(req.employee._id));
+  const employee = await Employee.findById(req.params.id);
+  employee.status = 'not-approved';
+  employee.projectId = null;
+  // var isEmployeeApproved = project.teamMembers.some(tm => {
+  //   return req.employee._id.equals(tm._id) && tm.status === 'approved';
+  // });
+  // if (project.teamMembers.length != 0 && isEmployeeApproved == true) {
+  //   throw new CustomError(400, 'Employee already approved!');
+  // }
+  // var teamMemberIndex = project.teamMembers.findIndex(tm => tm._id.equals(req.employee._id));
 
-  if (teamMemberIndex !== -1) {
-    project.teamMembers[teamMemberIndex].status = 'declined';
-    await project.save();
-    console.log('Team member status updated successfully.');
-  }
-  await project.save();
-  res.json(project);
+  // if (teamMemberIndex !== -1) {
+  //   project.teamMembers[teamMemberIndex].status = 'approved';
+  //   await project.save();
+  //   console.log('Team member status updated successfully.');
+  // }
+  await employee.save();
+  res.json(employee);
 };
 
 const getProject = async (req, res) => {
-  await Project.populate(req.project, {
-    path: 'organizationId',
-    select: 'name',
-  });
-  res.json(req.project);
+  const project = await Project.populate(req.project, [
+    {path: 'organizationId', select: 'name'},
+    { path: 'employees', select: 'firstName lastName phoneNumber email role' }
+  ]
+  );
+  res.json(project);
 };
 
 const getProjects = async (req, res) => {
@@ -101,6 +107,15 @@ const assignTeam = async (req, res) => {
   res.json({ message });
 };
 
+const fetchEmployees = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id).populate('employees');
+    res.json(project.employees);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createProject,
   deleteProject,
@@ -110,5 +125,6 @@ module.exports = {
   assignTeam,
   applyProject,
   approveProject,
-  declineProject
+  declineProject,
+  fetchEmployees
 };
