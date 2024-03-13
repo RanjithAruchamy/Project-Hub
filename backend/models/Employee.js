@@ -34,8 +34,8 @@ const employeeSchema = new mongoose.Schema(
       },
       required: [true, 'You must supply a phone number!'],
     },
-    salary: {
-      type: Number,
+    experience: {
+      type: String,
     },
     skill: {
       type: String,

@@ -15,7 +15,7 @@ const AnonymousNavbar = () => {
   return (
     <nav className={classes.navbar}>
       <Container className={classes.navContainer}>
-        <Link className={classes.brand}>—Board</Link>
+        <Link className={classes.brand}>ProjectHub</Link>
         <div className={classes.navRight}>
           {/* <Link to="/sign-up" className={classes.navItem}>
             Sign Up

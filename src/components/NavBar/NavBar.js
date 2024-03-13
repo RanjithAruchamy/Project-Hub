@@ -50,7 +50,7 @@ const NavBar = ({ theme, onThemeToggle, userId, onLogOut }) => {
         <Toolbar>
           <div className={classes.toolBar}>
             <Button component={Link} to="/dashboard" color="inherit">
-              -ProjectHub
+              ProjectHub
             </Button>
           </div>
           <Tooltip title="toggle light/dark theme">

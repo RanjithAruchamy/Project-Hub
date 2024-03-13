@@ -7,7 +7,8 @@ const {
   getProjects,
   assignTeam,
   applyProject,
-  fetchEmployees
+  fetchEmployees,
+  addTeamMembers
 } = require('../controllers/project');
 const {
   createOpening,
@@ -68,5 +69,10 @@ router.post('/:id/openings', authenticate, isBusinessOwner, createOpening);
 // Fetch Openings
 router.get('/:id/openings', authenticate, fetchOpenings);
 
+// Get team members of a project
 router.get('/:id/employees', authenticate, fetchEmployees)
+
+// add team member to a opening
+router.post('/:id/openings/:openingId/addResource', authenticate, isBusinessOwner, addTeamMembers);
+
 module.exports = router;

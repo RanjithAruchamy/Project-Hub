@@ -3,7 +3,7 @@ import { makeStyles, Modal, Backdrop, Fade, Grid, TextField, Button, Typography,
 import { ArrowDropDown } from '@material-ui/icons';
 import axios from '../../api/axios';
 
-const AddMemberForm = ({ onAdd, open, handleClose, role }) => {
+const AddMemberForm = ({ onAdd, open, handleClose, role, openingId, projectId }) => {
     const useStyles = makeStyles(theme => ({
         modal: {
             display: 'flex',
@@ -46,10 +46,12 @@ const AddMemberForm = ({ onAdd, open, handleClose, role }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/projects/${projectId}/openings/${openingId}/addResource`, { id: selectedValue}).then(res => {
+      window.location.reload();
+    });
         // You can perform additional validation here before sending the data
     };
 
-    { console.log(options) }
 
     return (
         <Modal
@@ -69,10 +71,18 @@ const AddMemberForm = ({ onAdd, open, handleClose, role }) => {
                     <Typography variant="h4" gutterBottom>
                         Add Member
                     </Typography>
-                    <form onSubmit={handleSubmit}>
-                        <Grid container spacing={40}>
+                    <form onSubmit={handleSubmit}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexdirection: 'column',
+                        margin: '39px',
+                        padding: '0px',
+                        flexDirection: 'column',
+                    }}>
+                        <Grid container spacing={40} style={{display: 'flex'}}>
                             <Grid item xs={40} sm={20}>
-                                <FormControl variant="outlined" fullWidth>
+                                <FormControl variant="outlined" width ='100px'>
                                     <InputLabel id="title-label">Title</InputLabel>
                                     <Select
                                         labelId="title-label"
@@ -95,7 +105,7 @@ const AddMemberForm = ({ onAdd, open, handleClose, role }) => {
                             </Grid>
                         </Grid>
 
-                        <Button color="primary" variant="contained" type="submit">Submit</Button>
+                        <Button color="primary" variant="contained" type="submit" alignItems="center" style={{marginTop: '20px'}}>Submit</Button>
                     </form>
                 </div>
             </Fade>

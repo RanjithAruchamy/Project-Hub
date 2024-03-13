@@ -60,12 +60,14 @@ const MemberCard = ({ member, auth, getTeam, projectId }) => {
             {member.firstName + ' ' + member.lastName}
           </Typography>
           <Typography className={classes.mb} color="textSecondary">
-            {member.role}
+            {member.skill}
           </Typography>
           <Typography variant="body2" component="p">
             {member.phoneNumber}
             <br />
             {member.email}
+            <br />
+            {member.experience ? `${member.experience} years` : '0 years'}
           </Typography>
           &nbsp; &nbsp;
           {auth.role === 'business-owner' && member.status === 'applied' && (
@@ -82,7 +84,7 @@ const MemberCard = ({ member, auth, getTeam, projectId }) => {
           {auth.role === 'business-owner' && member.status === 'approved' && (
             <div style={{ display: 'flex' }}>
               <Button color="secondary" variant="contained" onClick={() => handleDecline(member)}>
-                Delete
+                Remove
               </Button>
             </div>
           )}

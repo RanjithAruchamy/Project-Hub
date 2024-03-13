@@ -30,9 +30,9 @@ const TopEmployees = ({ employees, role, handleEmployeeAdded }) => {
             {e.firstName} {e.lastName}
           </Typography>
         </TableCell>
-        <TableCell>
+        {/* <TableCell>
           <Typography variant='subtitle1'>{e.teamId?.name}</Typography>
-        </TableCell>
+        </TableCell> */}
         <TableCell>
           <Typography variant='subtitle1'>{e.role}</Typography>
         </TableCell>
@@ -56,7 +56,7 @@ const TopEmployees = ({ employees, role, handleEmployeeAdded }) => {
             <TableRow>
               {/* <TableCell></TableCell> */}
               <TableCell>Employee</TableCell>
-              <TableCell>Team</TableCell>
+              {/* <TableCell>Team</TableCell> */}
               <TableCell>Role</TableCell>
               <TableCell>Joining Date</TableCell>
             </TableRow>

@@ -54,7 +54,7 @@ const schema = object().shape({
   firstName: string().required('First Name is required!'),
   lastName: string().required('Last Name is required!'),
   phoneNumber: string().matches(
-    /^(01)(0|2|1|5)[0-9]{8}$/,
+    /^(\+\d{1,3}[- ]?)?\d{10}$/,
     'Inavalid phone number!'
   ),
   dateOfBirth: date()

@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import AddOpeningForm from './AddOpeningForm';
 import AddMemberForm from './AddMemberForm';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,9 +42,14 @@ const JobOpeningsTable = ({ projectId, role, propAssignedProjectId }) => {
 
   const handleAddOpening = (newOpening) => {
     setshowHide(true);
-    axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/projects/${projectId}/openings`, newOpening);
+    axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/projects/${projectId}/openings`, newOpening).then(res => {
+      if (!res.data) toast.error('Unable to add opening!');
+      toast.success(`${newOpening.title} is added!`);
+    });
     setshowHide(false);
     getApi();
+    window.location.reload();
+
   };
 
   const handleAddMember = (newOpening) => {
@@ -73,8 +79,9 @@ const JobOpeningsTable = ({ projectId, role, propAssignedProjectId }) => {
     setshowHide(true);
   }
 
-  const handleClick = () => {
+  const handleClick = (id) => {
     setShowMemberForm(true);
+    
   }
 
   return (
@@ -99,8 +106,9 @@ const JobOpeningsTable = ({ projectId, role, propAssignedProjectId }) => {
             <TableCell>Title</TableCell>
             <TableCell>Location</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell>Opening</TableCell>
+            {/* <TableCell>Opening</TableCell> */}
             <TableCell>Skills</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -109,38 +117,41 @@ const JobOpeningsTable = ({ projectId, role, propAssignedProjectId }) => {
               <TableCell>{opening.title}</TableCell>
               <TableCell>{opening.location}</TableCell>
               <TableCell>{opening.description}</TableCell>
-              <TableCell>{opening.openings}</TableCell>
+              {/* <TableCell>{opening.openings}</TableCell> */}
               <TableCell>{opening.skills}</TableCell>
               <TableCell>
-                {role === 'business-owner' && (
-                  <>
-                  <Button color="primary" variant="contained" onClick={() => handleClick()}>
-                    Add Member
-                  </Button>
-                  &nbsp; &nbsp;
-                  <Button color="primary" variant="contained" onClick={() => handleDelete(opening.id)}>
-                    Delete
-                  </Button>
-                  </>
-                )}
-              {role === 'employee' && (
-                <div>
-                  {!assignedProjectId ? (
-                    <Button color="primary" variant="contained" disabled={assignedProjectId != null} onClick={() => handleApply(opening.id)}>
-                      Apply
+                  {role === 'business-owner' && (
+                    <>
+                    <Button color="primary" variant="contained" onClick={() => handleClick(opening.id)}>
+                      Add Member
                     </Button>
-                  ) : (
-                    <abbr title="You have already applied for a project!">
-                      <Button color="primary" variant="contained" disabled={assignedProjectId != null}  onClick={() => handleApply(opening.id)}>
+                    <>
+                      <AddMemberForm open={showMemberForm} handleClose={() => setShowMemberForm(false)} onAdd={handleAddMember} role={role} openingId={opening.id} projectId={projectId}/>
+                    </>
+                    &nbsp; &nbsp;
+                    <Button color="primary" variant="contained" onClick={() => handleDelete(opening.id)}>
+                      Delete
+                    </Button>
+                    </>
+                  )}
+                  {role === 'employee' && (
+                  <div>
+                    {!assignedProjectId ? (
+                      <Button color="primary" variant="contained" disabled={assignedProjectId != null} onClick={() => handleApply(opening.id)}>
                         Apply
                       </Button>
-                    </abbr>
-                  )}
-                </div>
-              )}
+                    ) : (
+                      <abbr title="You have already applied for a project!">
+                        <Button color="primary" variant="contained" disabled={assignedProjectId != null}  onClick={() => handleApply(opening.id)}>
+                          Apply
+                        </Button>
+                      </abbr>
+                    )}
+                  </div>
+                )}
 
-              </TableCell>
-            </TableRow>
+            </TableCell>
+             </TableRow>
           ))}
         </TableBody>
       </Table>
@@ -148,9 +159,6 @@ const JobOpeningsTable = ({ projectId, role, propAssignedProjectId }) => {
         <AddOpeningForm open={showhide} handleClose={() => setshowHide(false)} onAdd={handleAddOpening} role={role} />
       </>
 
-      <>
-        <AddMemberForm open={showMemberForm} handleClose={() => setShowMemberForm(false)} onAdd={handleAddMember} role={role} />
-      </>
 
     </div >
   );

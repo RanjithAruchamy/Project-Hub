@@ -34,11 +34,11 @@ const ProjectsOverview = ({ projects }) => {
         <TableCell>
           <ChipProjectStatus statusType={project.state} />
         </TableCell>
-        <TableCell>
+        {/* <TableCell>
           <Typography variant='subtitle1'>
             {formatter.format(project.budget)}
           </Typography>
-        </TableCell>
+        </TableCell> */}
       </TableRow>
     );
   });

@@ -11,6 +11,7 @@ const signIn = async (req, res) => {
 
 const createEmployee = async (req, res) => {
   req.body.organizationId = req.employee.organizationId;
+  console.log(req.body)
   const employee = new Employee(req.body);
   await employee.save();
   res.json(employee);

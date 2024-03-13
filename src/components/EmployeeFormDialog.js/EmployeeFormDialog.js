@@ -43,7 +43,7 @@ const schema = object().shape({
     .lowercase()
     .email('Invalid email address!')
     .required('Email is required!'),
-  salary: number().moreThan(2000, 'Minimum salary is 2000'),
+  // salary: number().moreThan(2000, 'Minimum salary is 2000'),
 });
 
 function sleep(delay = 0) {
@@ -93,12 +93,12 @@ const EmployeeFormDialog = ({
       data
     );
     if (!res.data) toast.error('Email does not exist!');
-    addTeamMemberByName(data.team, res.data);
+    // addTeamMemberByName(data.team, res.data);
     toast.success(`${data.firstName} ${data.lastName} is added!`);
     setOpen(false);
-    res.data.teamId = {
-      name: data.teamId,
-    };
+    // res.data.teamId = {
+    //   name: data.teamId,
+    // };
     handleEmployeeAdded(res.data);
   };
 
@@ -220,11 +220,11 @@ const EmployeeFormDialog = ({
                   variant='standard'
                   type='number'
                   fullWidth
-                  id='salary'
-                  label='Salary'
-                  name='salary'
-                  error={!!errors.salary}
-                  helperText={errors.salary?.message}
+                  id='experience'
+                  label='Experience in years'
+                  name='experience'
+                  // error={!!errors.salary}
+                  // helperText={errors.salary?.message}
                   inputRef={register}
                 />
               </Grid>

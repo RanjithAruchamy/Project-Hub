@@ -17,10 +17,10 @@ const openingSchema = new mongoose.Schema(
       type: String,
       required: [false, 'You must supply description!'],
     },
-    openings: {
-      type: Number,
-      required: [true, 'You must supply opening number!'],
-    },
+    // openings: {
+    //   type: Number,
+    //   required: [true, 'You must supply opening number!'],
+    // },
     skills: {
       type: String,
       required: [true, 'You must supply skills!'],

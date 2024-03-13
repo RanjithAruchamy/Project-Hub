@@ -117,7 +117,7 @@ const AddOpeningForm = ({ onAdd, open, handleClose, role}) => {
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            {/* <Grid item xs={12} sm={6}>
                                 <TextField
                                     name="openings"
                                     label="Openings"
@@ -126,7 +126,7 @@ const AddOpeningForm = ({ onAdd, open, handleClose, role}) => {
                                     value={jobData.openings}
                                     onChange={handleChange}
                                 />
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                         <Button color="primary" variant="contained" type="submit" className={classes.submitButton}>Submit</Button>
                     </form>

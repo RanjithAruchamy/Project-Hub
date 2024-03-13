@@ -13,7 +13,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GroupIcon from '@material-ui/icons/Group';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import EmailIcon from '@material-ui/icons/Email';
@@ -126,10 +126,10 @@ const UserDetails = ({ match, userId }) => {
           {userData.role !== 'business-owner' && (
             <Grid item xs={12} md={6} lg={4}>
               <ProjectDetailsCard
-                title='Salary'
-                description={formatter.format(userData.salary)}
+                title='Skill'
+                description={userData.skill}
               >
-                <MonetizationOnIcon color='secondary' fontSize='large' />
+                <LibraryBooksIcon color='secondary' fontSize='large' />
               </ProjectDetailsCard>
             </Grid>
           )}
@@ -154,7 +154,7 @@ const UserDetails = ({ match, userId }) => {
               <BusinessIcon color='secondary' fontSize='large' />
             </ProjectDetailsCard>
           </Grid>
-          {userData.role !== 'business-owner' && (
+          {/* {userData.role !== 'business-owner' && (
             <Grid item xs={12} md={6} lg={4}>
               <ProjectDetailsCard
                 title='Team'
@@ -163,13 +163,13 @@ const UserDetails = ({ match, userId }) => {
                 <GroupIcon color='secondary' fontSize='large' />
               </ProjectDetailsCard>
             </Grid>
-          )}
+          )} */}
           <Grid item xs={12} md={6} lg={4}>
             <ProjectDetailsCard title='Role' description={userData.role}>
               <AssignmentIndIcon color='secondary' fontSize='large' />
             </ProjectDetailsCard>
           </Grid>
-          {userData.role !== 'business-owner' && (
+          {/* {userData.role !== 'business-owner' && (
             <Grid item xs={12}>
               <ProjectDetailsCard
                 title='Assigned Tasks'
@@ -224,7 +224,7 @@ const UserDetails = ({ match, userId }) => {
                 <AssignmentIcon color='secondary' fontSize='large' />
               </ProjectDetailsCard>
             </Grid>
-          )}
+          )} */}
         </Grid>
       )}
     </Container>

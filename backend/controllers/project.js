@@ -80,7 +80,7 @@ const declineProject = async (req, res) => {
 
 const getProject = async (req, res) => {
   const project = await Project.populate(req.project, [
-    {path: 'organizationId', select: 'name'},
+    { path: 'organizationId', select: 'name' },
     { path: 'employees', select: 'firstName lastName phoneNumber email role' }
   ]
   );
@@ -116,6 +116,19 @@ const fetchEmployees = async (req, res) => {
   }
 };
 
+const addTeamMembers = async (req, res) => {
+  const employee = await Employee.findById(req.body.id);
+  employee.projectId = req.params.id;
+  employee.status = "approved";
+  // console.log(employee);
+  try {
+  await employee.save();
+  res.status(201).json(employee);
+} catch (error) {
+  res.status(500).json({ message: error.message });
+}
+};
+
 module.exports = {
   createProject,
   deleteProject,
@@ -126,5 +139,6 @@ module.exports = {
   applyProject,
   approveProject,
   declineProject,
-  fetchEmployees
+  fetchEmployees,
+  addTeamMembers
 };
